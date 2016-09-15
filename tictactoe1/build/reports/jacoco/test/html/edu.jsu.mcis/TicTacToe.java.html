@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TicTacToe.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tictactoe1</a> &gt; <a href="index.source.html" class="el_package">edu.jsu.mcis</a> &gt; <span class="el_source">TicTacToe.java</span></div><h1>TicTacToe.java</h1><pre class="source lang-java linenums">package edu.jsu.mcis;
+import java.io.*;
+import java.util.*;
+
+public class TicTacToe {
+   
+<span class="pc" id="L7">	public enum Character {</span>
+<span class="fc" id="L8">      X,O,TIE,EMPTY;</span>
+	  }
+	
+<span class="fc" id="L11">	Character[][] grid = new Character[3][3];</span>
+<span class="fc" id="L12">	int switchTurns=0;</span>
+    Character selectedCharacter;
+	
+<span class="fc" id="L15">	public TicTacToe(){</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">		for(int rows = 0; rows &lt; 3; rows++){</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">			for(int columns = 0; columns &lt; 3; columns++){</span>
+<span class="fc" id="L18">				grid[rows][columns] = Character.EMPTY;</span>
+				}
+			}
+<span class="fc" id="L21">	}</span>
+	
+	public void boardDisplay(){
+<span class="nc bnc" id="L24" title="All 2 branches missed.">		for(int rows = 0; rows &lt; 3; rows++){</span>
+<span class="nc bnc" id="L25" title="All 2 branches missed.">			for(int columns = 0; columns &lt; 3; columns++){</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">				if(slotClearOrFilled(rows, columns)){</span>
+<span class="nc" id="L27">					System.out.print(&quot; &quot;);</span>
+				}
+				
+				else{
+<span class="nc" id="L31">					System.out.print(grid[rows][columns]);</span>
+				}
+<span class="nc bnc" id="L33" title="All 2 branches missed.">				if(columns &lt; 2){</span>
+<span class="nc" id="L34">					System.out.print(&quot; &quot;+ &quot;|&quot;);</span>
+                }
+            }
+<span class="nc bnc" id="L37" title="All 2 branches missed.">                if(rows &lt; 2){</span>
+<span class="nc" id="L38">					System.out.println();</span>
+<span class="nc" id="L39">					System.out.println(&quot;--------&quot;);</span>
+                }
+        }
+<span class="nc" id="L42">   }</span>
+	public void getUserInput(){
+<span class="nc" id="L44">      Scanner userInput = new Scanner(System.in).useDelimiter(&quot;[,\\s+]&quot;);</span>
+<span class="nc" id="L45">      System.out.println();</span>
+<span class="nc" id="L46">	  System.out.println(&quot;Enter a valid position:&quot;);</span>
+<span class="nc" id="L47">      int UserRowInput = Integer.valueOf(userInput.nextInt());</span>
+<span class="nc" id="L48">      int UserColumnInput = Integer.valueOf(userInput.nextInt());</span>
+<span class="nc" id="L49">      placeCharacter(UserRowInput, UserColumnInput);</span>
+		
+<span class="nc" id="L51">    }</span>
+	public void placeCharacter(int rows, int columns){
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if(slotClearOrFilled(rows,columns)){</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">			if(switchTurns == 0){</span>
+<span class="fc" id="L55">				selectedCharacter = Character.X;</span>
+<span class="fc" id="L56">				switchTurns++;</span>
+            }
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">            else if(switchTurns == 1){</span>
+<span class="fc" id="L59">				selectedCharacter = Character.O;</span>
+<span class="fc" id="L60">				switchTurns--;</span>
+            }
+<span class="fc" id="L62">			grid[rows][columns] = selectedCharacter;</span>
+        }
+			else{
+<span class="nc" id="L65">				System.out.println(&quot;Not a valid move! Please enter position on grid again!&quot;);</span>
+      
+			}	
+   
+<span class="fc" id="L69">    }</span>
+	public Character getCharacter(int rows, int columns){
+<span class="fc" id="L71">      return grid[rows][columns];</span>
+    }
+   
+	public boolean slotClearOrFilled(int rows, int columns){
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if(grid[rows][columns] == Character.EMPTY) {</span>
+<span class="fc" id="L76">			return true;</span>
+        }
+<span class="fc" id="L78">		return false;</span>
+    }
+   
+ 
+   
+	public Character userHasWonSituations(){
+<span class="pc bpc" id="L84" title="3 of 4 branches missed.">		if(grid[0][0] == grid[1][0] &amp;&amp; grid[1][0] == grid[2][0])return grid[0][0];</span>
+<span class="pc bpc" id="L85" title="1 of 4 branches missed.">		else if(grid[0][1] == grid[1][1] &amp;&amp; grid[1][1] == grid[2][1])return grid[0][1];</span>
+<span class="pc bpc" id="L86" title="1 of 4 branches missed.">		else if(grid[0][2] == grid[1][2] &amp;&amp; grid[1][2] == grid[2][2])return grid[0][2];</span>
+<span class="pc bpc" id="L87" title="1 of 4 branches missed.">		else if(grid[0][0] == grid[0][1] &amp;&amp; grid[0][1] == grid[0][2])return grid[0][0];</span>
+<span class="pc bpc" id="L88" title="2 of 4 branches missed.">        else if(grid[1][0] == grid[1][1] &amp;&amp; grid[1][1] == grid[1][2])return grid[1][0];</span>
+<span class="pc bpc" id="L89" title="2 of 4 branches missed.">		else if(grid[2][0] == grid[2][1] &amp;&amp; grid[2][1] == grid[2][2])return grid[2][0];</span>
+<span class="pc bpc" id="L90" title="2 of 4 branches missed.">		else if(grid[0][2] == grid[1][1] &amp;&amp; grid[1][1] == grid[2][0])return grid[0][2];</span>
+<span class="pc bpc" id="L91" title="3 of 4 branches missed.">		else if(grid[0][0] == grid[1][1] &amp;&amp; grid[1][1] == grid[2][2])return grid[0][0];</span>
+		else{
+<span class="fc" id="L93">			return Character.EMPTY;</span>
+        }
+   
+    }
+   
+   
+	public boolean gridIsComplete(){
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		for(int rows = 0; rows &lt; 3; rows++){</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">			for(int columns = 0; columns &lt; 3; columns ++){</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">				if (grid[rows][columns] == TicTacToe.Character.EMPTY){</span>
+<span class="fc" id="L103">					return false;</span>
+               
+                }
+            }
+        }
+<span class="fc" id="L108">		return true;</span>
+    }
+   
+	public boolean tieSituation(){
+<span class="fc bfc" id="L112" title="All 4 branches covered.">		if(userHasWonSituations()== Character.EMPTY &amp;&amp; gridIsComplete()){</span>
+<span class="fc" id="L113">			return true;</span>
+        }
+<span class="fc" id="L115">		return false;</span>
+	}
+   
+   
+	public void RunGameAndCheckGameConditions(){
+<span class="nc" id="L120">		int num = 0;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		while(num == 0){</span>
+<span class="nc" id="L122">			boardDisplay();</span>
+<span class="nc" id="L123">			getUserInput(); </span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			if(userHasWonSituations() == Character.X){</span>
+<span class="nc" id="L125">				num = 1;</span>
+<span class="nc" id="L126">				System.out.println(&quot;Congrats player 1 wins.&quot;);</span>
+				
+			}
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			else if(userHasWonSituations() == Character.O){</span>
+<span class="nc" id="L130">				num = 1;</span>
+<span class="nc" id="L131">				System.out.println(&quot;Congrats Player 2 wins.&quot;);</span>
+				
+			}
+<span class="nc bnc" id="L134" title="All 2 branches missed.">			else if(tieSituation()== true){</span>
+<span class="nc" id="L135">				num=1;</span>
+<span class="nc" id="L136">				System.out.println(&quot;Game is a Tie&quot;);</span>
+				
+		    }  
+        }
+		
+<span class="nc" id="L141">   }</span>
+  
+   public static void main(String[] args){
+<span class="nc" id="L144">      TicTacToe game = new TicTacToe();</span>
+<span class="nc" id="L145">	  System.out.println(&quot;&quot;);</span>
+<span class="nc" id="L146">	  System.out.println(&quot;**Instructions**&quot;);</span>
+<span class="nc" id="L147">	  System.out.println(&quot;Welcome to TicTacToe. Player 1 is X. Player 2 is O.&quot;);</span>
+<span class="nc" id="L148">	  System.out.println(&quot;Enter a valid postion on the grid that ranges from (0-2).&quot;);</span>
+<span class="nc" id="L149">	  System.out.println(&quot;First number is your row and Second number is the column.&quot;);</span>
+<span class="nc" id="L150">	  System.out.println(&quot;The two numbers should be seperated by a comma without any spaces.&quot;);</span>
+<span class="nc" id="L151">	  game.RunGameAndCheckGameConditions();</span>
+<span class="nc" id="L152">	}</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

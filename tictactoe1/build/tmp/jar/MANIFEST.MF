@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Implementation-Title: TicTacToe
+Implementation-Version: .01
+Main-Class: edu.jsu.mcis.TicTacToe
+

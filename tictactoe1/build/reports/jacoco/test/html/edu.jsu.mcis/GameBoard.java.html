@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameBoard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tictactoe1</a> &gt; <a href="index.source.html" class="el_package">edu.jsu.mcis</a> &gt; <span class="el_source">GameBoard.java</span></div><h1>GameBoard.java</h1><pre class="source lang-java linenums">package edu.jsu.mcis;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class GameBoard extends JFrame  {
+<span class="nc" id="L8">  private JButton[][] button = new JButton[3][3];</span>
+<span class="nc" id="L9">	TicTacToe guiBoard= new TicTacToe();</span>
+  
+
+<span class="nc" id="L12">  public GameBoard() {</span>
+<span class="nc" id="L13">    setupBoard();</span>
+<span class="nc" id="L14">  }</span>
+
+  private void setupBoard() {
+<span class="nc" id="L17">	new TicTacToe();</span>
+<span class="nc" id="L18">    JFrame mainBoard = new JFrame(&quot;Tic-Tac-Toe&quot;);</span>
+<span class="nc" id="L19">    mainBoard.setSize(300,300);</span>
+<span class="nc" id="L20">    mainBoard.setLayout(new GridLayout(3, 3));</span>
+<span class="nc" id="L21">    mainBoard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L22">    int place = 1;</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">    for (int row = 0; row &lt; 3; row++) {</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">      for (int column = 0; column &lt; 3; column++) {</span>
+<span class="nc" id="L25">        button[row][column] = new JButton(&quot;&quot;);</span>
+<span class="nc" id="L26">        button[row][column].setName(Integer.toString(place));</span>
+<span class="nc" id="L27">        button[row][column].addActionListener(new ButtonListener(row, column));</span>
+<span class="nc" id="L28">        button[row][column].setFont(new Font(&quot;&quot;, Font.PLAIN, 55));</span>
+<span class="nc" id="L29">        mainBoard.add(button[row][column]);</span>
+<span class="nc" id="L30">        place+= 1;</span>
+      }
+    }
+<span class="nc" id="L33">    mainBoard.setVisible(true);</span>
+<span class="nc" id="L34">  }</span>
+
+  private class ButtonListener implements ActionListener {
+    private int row;
+    private int col;
+
+<span class="nc" id="L40">    public ButtonListener(int r, int c) {</span>
+<span class="nc" id="L41">      row = r;</span>
+<span class="nc" id="L42">      col = c;</span>
+<span class="nc" id="L43">    }</span>
+
+    public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L46">      buttonPress(row, col);</span>
+<span class="nc" id="L47">    }</span>
+  }
+  
+
+
+  public void buttonPress (int row, int col) {
+<span class="nc" id="L53">    guiBoard.placeCharacter(row, col);</span>
+	
+<span class="nc bnc" id="L55" title="All 2 branches missed.">      if (guiBoard.getCharacter(row, col) == TicTacToe.Character.X) {</span>
+<span class="nc" id="L56">        button[row][col].setLabel(&quot;X&quot;);</span>
+		
+      }
+<span class="nc bnc" id="L59" title="All 2 branches missed.">      else if (guiBoard.getCharacter(row, col) == TicTacToe.Character.O) {</span>
+<span class="nc" id="L60">        button[row][col].setLabel(&quot;O&quot;);</span>
+		
+      }
+<span class="nc bnc" id="L63" title="All 2 branches missed.">    if (guiBoard.userHasWonSituations() == TicTacToe.Character.X){</span>
+<span class="nc" id="L64">		int delay=50;</span>
+<span class="nc" id="L65">        ActionListener task = new ActionListener() {</span>
+          public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L67">            JOptionPane.showMessageDialog(null, &quot;X is the winner!&quot;, &quot;Game Over&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L68">          }</span>
+        };
+<span class="nc" id="L70">		Timer myTimer= new Timer(delay, task);</span>
+<span class="nc" id="L71">		myTimer.setRepeats(false);</span>
+<span class="nc" id="L72">		myTimer.start();</span>
+<span class="nc" id="L73">    }</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">    else if (guiBoard.userHasWonSituations() == TicTacToe.Character.O) {</span>
+<span class="nc" id="L75">		int delay=50;</span>
+<span class="nc" id="L76">        ActionListener task = new ActionListener() {</span>
+          public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L78">            JOptionPane.showMessageDialog(null, &quot;O is the winner!&quot;, &quot;Game Over&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L79">          }</span>
+        };
+<span class="nc" id="L81">		Timer myTimer= new Timer(delay, task);</span>
+<span class="nc" id="L82">		myTimer.setRepeats(false);</span>
+<span class="nc" id="L83">		myTimer.start();</span>
+    }
+<span class="nc bnc" id="L85" title="All 2 branches missed.">    if (guiBoard.tieSituation()) {</span>
+<span class="nc" id="L86">		int delay=50;</span>
+<span class="nc" id="L87">        ActionListener task = new ActionListener() {</span>
+          public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L89">            JOptionPane.showMessageDialog(null, &quot;TIE&quot;, &quot;Game Over&quot;, JOptionPane.INFORMATION_MESSAGE);</span>
+<span class="nc" id="L90">          }</span>
+        };
+<span class="nc" id="L92">		Timer myTimer= new Timer(delay, task);</span>
+<span class="nc" id="L93">		myTimer.setRepeats(false);</span>
+<span class="nc" id="L94">		myTimer.start();</span>
+    }
+	
+<span class="nc" id="L97">  }</span>
+  
+  public static void main(String[] args) {
+<span class="nc" id="L100">	GameBoard tictactoe= new GameBoard();</span>
+<span class="nc" id="L101">	}</span>
+	
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
